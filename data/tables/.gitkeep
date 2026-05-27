@@ -1,0 +1,10 @@
+# Table input files (place here before running 05_tables/generate_tables.py):
+#   Design_Rainfall_Intensities_Selected.csv   <- official IDF benchmark
+#   IDF_TABLE.csv                              <- full official IDF table
+#
+# Generated outputs (after running generate_tables.py):
+#   table1_idf_comparison.csv
+#   table2_correction_factors.csv
+#   table3_temporal_stability.csv
+#   table4_peak_discharge.csv
+#   all_tables.xlsx
