@@ -132,7 +132,7 @@ catch_gdf = gpd.GeoDataFrame(geometry=[unary_union(polys)], crs=TARGET_CRS)
 area_km2  = catch_gdf.geometry.area.iloc[0] / 1e6
 catch_gdf["area_km2"] = round(area_km2, 3)
 catch_gdf.to_file(OUTPUT / "catchment.shp")
-print(f"  Catchment area : {area_km2:.3f} km²")
+print(f"  Catchment area : {area_km2:.3f} km²  (paper reports 3.43 km²)")
 print(f"  Saved → {OUTPUT / 'catchment.shp'}  [EPSG:32648]")
 
 # ══════════════════════════════════════════════════════════════════════════════
