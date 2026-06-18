@@ -45,10 +45,11 @@ OUT       = ROOT / "data" / "tables"
 OUT.mkdir(parents=True, exist_ok=True)
 
 # ── Rational method parameters ────────────────────────────────────────────────
-C_RUNOFF   = 0.55
-A_KM2      = 3.43
-DESIGN_RP  = 10
-DESIGN_DUR = "1h"
+C_RUNOFF         = 0.55
+A_KM2            = 3.599
+DESIGN_RP        = 10
+DESIGN_DUR       = "1h"
+DESIGN_DUR_SHORT = "30min"
 
 DUR_ORDER  = {"30min": 1, "1h": 2, "2h": 3, "4h": 4, "24h": 5}
 DUR_LABELS = {"30min": "30 min", "1h": "1 h", "2h": "2 h",
@@ -194,6 +195,11 @@ print(f"  Saved -> temporal_stability.csv  ({len(table4)} rows)")
 # ══════════════════════════════════════════════════════════════════════════════
 print("Building Table 5 ...")
 
+def rational_Q(i_mm_h, C, A_km2):
+    """Peak discharge Q (m3/s) = C * i (mm/h) * A (km2) / 3.6"""
+    return round(C * i_mm_h * A_km2 / 3.6, 2)
+
+# Primary design duration: 1 h
 imerg_raw_i = imerg_idf.loc[
     (imerg_idf["duration"] == DESIGN_DUR) &
     (imerg_idf["return_period_year"] == DESIGN_RP),
@@ -202,24 +208,43 @@ imerg_raw_i = imerg_idf.loc[
 imerg_raw_i = float(imerg_raw_i.iloc[0]) if len(imerg_raw_i) else np.nan
 official_i  = official_map.get(DESIGN_DUR, {}).get(DESIGN_RP, np.nan)
 
-def rational_Q(i_mm_h, C, A_km2):
-    """Peak discharge Q (m3/s) = C * i (mm/h) * A (km2) / 3.6"""
-    return round(C * i_mm_h * A_km2 / 3.6, 2)
+# Short-duration sensitivity: 30 min
+imerg_raw_i_short = imerg_idf.loc[
+    (imerg_idf["duration"] == DESIGN_DUR_SHORT) &
+    (imerg_idf["return_period_year"] == DESIGN_RP),
+    "imerg_intensity_mm_per_hr"
+]
+imerg_raw_i_short = float(imerg_raw_i_short.iloc[0]) if len(imerg_raw_i_short) else np.nan
+official_i_short  = official_map.get(DESIGN_DUR_SHORT, {}).get(DESIGN_RP, np.nan)
 
 rows_t5 = [
     {
-        "Scenario":                  "Raw IMERG",
+        "Scenario":                  "Raw IMERG (1 h)",
         "Rainfall intensity (mm/h)": round(imerg_raw_i, 2),
         "Runoff coefficient C":      C_RUNOFF,
         "Catchment area (km2)":      A_KM2,
         "Peak discharge Q (m3/s)":   rational_Q(imerg_raw_i, C_RUNOFF, A_KM2),
     },
     {
-        "Scenario":                  "Benchmark-corrected IMERG",
+        "Scenario":                  "Benchmark-corrected IMERG (1 h)",
         "Rainfall intensity (mm/h)": round(official_i, 2),
         "Runoff coefficient C":      C_RUNOFF,
         "Catchment area (km2)":      A_KM2,
         "Peak discharge Q (m3/s)":   rational_Q(official_i, C_RUNOFF, A_KM2),
+    },
+    {
+        "Scenario":                  "Raw IMERG (30 min)",
+        "Rainfall intensity (mm/h)": round(imerg_raw_i_short, 2),
+        "Runoff coefficient C":      C_RUNOFF,
+        "Catchment area (km2)":      A_KM2,
+        "Peak discharge Q (m3/s)":   rational_Q(imerg_raw_i_short, C_RUNOFF, A_KM2),
+    },
+    {
+        "Scenario":                  "Benchmark-corrected IMERG (30 min)",
+        "Rainfall intensity (mm/h)": round(official_i_short, 2),
+        "Runoff coefficient C":      C_RUNOFF,
+        "Catchment area (km2)":      A_KM2,
+        "Peak discharge Q (m3/s)":   rational_Q(official_i_short, C_RUNOFF, A_KM2),
     },
 ]
 table5 = pd.DataFrame(rows_t5)

@@ -29,7 +29,7 @@ Outputs:
 References:
     Funk et al. (2015). The climate hazards infrared precipitation with
     stations. Scientific Data 2:150066.
-    CHIRPS v3: UCSB-CHC/CHIRPS/V3/DAILY_SAT (GEE collection).
+    CHIRPS v3: UCSB-CHC/CHIRPS/V3/DAILY_RNL (GEE collection).
 """
 
 from pathlib import Path
@@ -188,7 +188,7 @@ fig, ax = plt.subplots(figsize=(9, 5.5))
 # Official
 ax.plot(T_PLOT, official_q(T_PLOT),
         color="#D62728", lw=2.2, ls="-",
-        label=f"Official benchmark (1999–2019, n=20)")
+        label=f"Official benchmark (1999–2019, n=21)")
 
 # CHIRPS 1999-2019 (same window, dashed green)
 ax.plot(T_PLOT, chirps_q_1999_2019(T_PLOT),
