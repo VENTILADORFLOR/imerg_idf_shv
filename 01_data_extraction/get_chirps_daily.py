@@ -21,7 +21,7 @@ Note on collection choice:
                    into daily amounts. ERA5 covers 1940 to present, so
                    DAILY_RNL provides the full 1981-to-present record.
     DAILY_RNL is used here to obtain the complete 1981-2025 time series
-    required for the 44-year Gumbel comparison in the manuscript.
+    required for the 45-year Gumbel comparison in the manuscript.
 
 Output (Google Drive -> data/raw/):
     rainfall_point_chirps_1981_2025.csv

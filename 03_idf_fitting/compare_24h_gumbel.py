@@ -13,7 +13,7 @@ Two analytical purposes:
     Purpose 1 (same-window comparison, lines 1-3): assess satellite vs official bias
               over an equivalent period; CHIRPS 1999-2019 bridges the one-year gap
               between IMERG (starts 2000) and the official record (starts 1999).
-    Purpose 2 (long-record comparison, lines 4-5): assess whether the official 20-year
+    Purpose 2 (long-record comparison, lines 4-5): assess whether the official 21-year
               record — which includes the 1999 extreme event — systematically overestimates
               24-hour design depths relative to longer satellite records.
 
