@@ -3,10 +3,10 @@
 
 Compare 24-hour Gumbel frequency curves from five sources:
 
-    1. Official IDF benchmark (Department of Hydrology, Cambodia, 1999-2019, n=20)
+    1. Official IDF benchmark (Department of Hydrology, Cambodia, 1999-2019, n=21)
     2. CHIRPS v3 (1999-2019, n=21) — same window as official, isolates 1999 outlier effect
     3. IMERG V07 (2000-2019, n=20) — primary analysis period, IMERG starts 2000-06
-    4. CHIRPS v3 (1981-2025, n=44) — long record, tests whether official 24h depths are elevated
+    4. CHIRPS v3 (1981-2025, n=45) — long record, tests whether official 24h depths are elevated
     5. IMERG V07 (2000-2024, n=25) — extended record for temporal stability check
 
 Two analytical purposes:
